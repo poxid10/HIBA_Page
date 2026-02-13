@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gift</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/framer-motion/dist/framer-motion.umd.js"></script>
+
+<style>
+body{
+background: linear-gradient(135deg,#2b0036,#5b0f3a,#7a1c4a);
+}
+</style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center">
+
+<div id="app"></div>
+
+<script>
+
+const app = document.getElementById("app");
+
+let opened=false;
+let showMessage=false;
+
+const message = `
+هِبَة يا هِبَة الله
+ما بَعرِف كيف وَقِعَت عَلَيْكِ عُيوني يَومها،
+ما بَعرِف بَعدها شو صار فيني بَعدها…
+بس كان في إشي شَدَّني إِلِك،
+ويمكن لِهَيك حَسّيت إِنِّك شَي مُخْتَلِف عَن الكُل.
+
+إِنتِ راحَة، وَدِفَى، وَإِحساس حِلُو بَيجِي بِلا سَبَب.
+`;
+
+function render(){
+
+if(!opened){
+app.innerHTML = `
+<div class="text-center">
+<h1 class="text-white text-3xl mb-10">Something Special For You</h1>
+
+<div onclick="openGift()" 
+class="w-44 h-44 mx-auto rounded-3xl bg-gradient-to-br from-fuchsia-600 to-rose-600 flex items-center justify-center shadow-2xl cursor-pointer hover:scale-110 transition">
+
+🎁
+
+</div>
+
+<p class="text-white/70 mt-6">Tap The Gift</p>
+</div>
+`;
+}
+
+else if(opened && !showMessage){
+app.innerHTML=`
+<div class="text-center">
+<h2 class="text-white text-4xl mb-10">A Message Waiting For You</h2>
+
+<button onclick="reveal()" 
+class="px-10 py-4 rounded-xl bg-gradient-to-r from-fuchsia-600 to-rose-500 text-white text-lg">
+Reveal Message
+</button>
+</div>
+`;
+}
+
+else{
+app.innerHTML=`
+<div class="max-w-xl text-center text-white">
+<h2 class="text-3xl mb-10">لَكِ أَنْتِ</h2>
+<p style="white-space:pre-line; direction:rtl; font-size:22px; line-height:2">
+${message}
+</p>
+</div>
+`;
+}
+
+}
+
+function openGift(){
+opened=true;
+render();
+}
+
+function reveal(){
+showMessage=true;
+render();
+}
+
+render();
+
+</script>
+
+</body>
+</html>
