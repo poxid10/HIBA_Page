@@ -1,99 +1,177 @@
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gift</title>
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Card, CardContent } from "@/components/ui/card";
+import { Gift, Sparkles } from "lucide-react";
 
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/framer-motion/dist/framer-motion.umd.js"></script>
+export default function RomanticGiftRevealSite() {
+  const [opened, setOpened] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
 
-<style>
-body{
-background: linear-gradient(135deg,#2b0036,#5b0f3a,#7a1c4a);
-}
-</style>
-</head>
-
-<body class="min-h-screen flex items-center justify-center">
-
-<div id="app"></div>
-
-<script>
-
-const app = document.getElementById("app");
-
-let opened=false;
-let showMessage=false;
-
-const message = `
-هِبَة يا هِبَة الله
+  const secretMessage = `هِبَة يا هِبَة الله
 ما بَعرِف كيف وَقِعَت عَلَيْكِ عُيوني يَومها،
 ما بَعرِف بَعدها شو صار فيني بَعدها…
 بس كان في إشي شَدَّني إِلِك،
 ويمكن لِهَيك حَسّيت إِنِّك شَي مُخْتَلِف عَن الكُل.
 
 إِنتِ راحَة، وَدِفَى، وَإِحساس حِلُو بَيجِي بِلا سَبَب.
+26/11/2025❤️
 `;
 
-function render(){
+  return (
+    <div className="min-h-screen w-full overflow-hidden relative bg-gradient-to-br from-fuchsia-950 via-rose-800 to-pink-700 flex items-center justify-center perspective-[1800px]">
 
-if(!opened){
-app.innerHTML = `
-<div class="text-center">
-<h1 class="text-white text-3xl mb-10">Something Special For You</h1>
+      {/* Soft Romantic Particles */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(14)].map((_, i) => (
+          <motion.div
+            key={i}
+            initial={{ y: "120%", opacity: 0 }}
+            animate={{ y: "-20%", opacity: [0, 0.3, 0] }}
+            transition={{ duration: 14 + Math.random() * 8, repeat: Infinity, delay: Math.random() * 6 }}
+            className="absolute text-white/25"
+            style={{ left: Math.random() * 100 + "%", fontSize: 6 + Math.random() * 10 }}
+          >
+            ✦
+          </motion.div>
+        ))}
+      </div>
 
-<div onclick="openGift()" 
-class="w-44 h-44 mx-auto rounded-3xl bg-gradient-to-br from-fuchsia-600 to-rose-600 flex items-center justify-center shadow-2xl cursor-pointer hover:scale-110 transition">
+      <AnimatePresence>
+        {!opened && (
+          <motion.div
+            key="gift"
+            initial={{ opacity: 0, scale: 0.7, y: 40 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 1.25, filter: "blur(20px)" }}
+            transition={{ duration: 1.3 }}
+            className="w-full flex items-center justify-center"
+          >
 
-🎁
+            <Card className="w-[420px] max-w-[90vw] bg-white/10 backdrop-blur-xl border border-white/10 shadow-[0_40px_120px_rgba(0,0,0,0.65)] rounded-3xl">
+              <CardContent className="p-12 flex flex-col items-center justify-center text-center gap-10">
 
-</div>
+                <motion.h1
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1.1 }}
+                  className="text-white text-2xl sm:text-3xl font-light tracking-wide"
+                >
+                  Something Special For You
+                </motion.h1>
 
-<p class="text-white/70 mt-6">Tap The Gift</p>
-</div>
-`;
+                {/* PERFECT CENTER 3D GIFT */}
+                <motion.div
+                  onClick={() => setOpened(true)}
+                  className="relative flex items-center justify-center"
+                  whileHover={{ scale: 1.08, rotateY: 14, rotateX: 6 }}
+                  whileTap={{ scale: 0.95 }}
+                  style={{ transformStyle: "preserve-3d" }}
+                >
+
+                  {/* Gift Body */}
+                  <motion.div
+                    animate={{ rotateY: [0, 10, -10, 0] }}
+                    transition={{ duration: 7, repeat: Infinity }}
+                    className="w-40 h-40 sm:w-44 sm:h-44 rounded-3xl bg-gradient-to-br from-fuchsia-600 via-rose-600 to-pink-600 shadow-[0_35px_90px_rgba(0,0,0,0.75)] flex items-center justify-center"
+                  >
+                    <Gift size={70} className="text-white drop-shadow-2xl" />
+                  </motion.div>
+
+                  {/* Soft Glow */}
+                  <motion.div
+                    className="absolute inset-0 rounded-3xl blur-2xl bg-fuchsia-500/40"
+                    animate={{ opacity: [0.35, 0.75, 0.35] }}
+                    transition={{ duration: 4, repeat: Infinity }}
+                  />
+
+                  {/* Depth Shadow */}
+                  <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-32 h-10 bg-black/50 blur-2xl rounded-full" />
+
+                </motion.div>
+
+                <p className="text-white/65 text-sm sm:text-base">
+                  Tap The Gift
+                </p>
+
+              </CardContent>
+            </Card>
+
+          </motion.div>
+        )}
+
+        {opened && (
+          <motion.div
+            key="stage2"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="absolute inset-0 flex flex-col items-center justify-center bg-black"
+          >
+
+            {/* Cinematic Glow */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.75 }}
+              transition={{ duration: 3 }}
+              className="absolute w-[700px] h-[700px] bg-rose-500 blur-[240px] rounded-full"
+            />
+
+            {!showMessage && (
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                className="relative text-center space-y-10"
+              >
+                <motion.h2
+                  initial={{ letterSpacing: "0.5em", opacity: 0 }}
+                  animate={{ letterSpacing: "0.08em", opacity: 1 }}
+                  transition={{ duration: 2 }}
+                  className="text-4xl sm:text-5xl text-white font-light"
+                >
+                  A Message Waiting For You
+                </motion.h2>
+
+                <motion.button
+                  whileHover={{ scale: 1.08 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setShowMessage(true)}
+                  className="rounded-2xl px-12 py-5 text-lg bg-gradient-to-r from-fuchsia-600 to-rose-500 text-white shadow-2xl"
+                >
+                  <Sparkles className="inline mr-2" /> Reveal Message
+                </motion.button>
+              </motion.div>
+            )}
+
+            {showMessage && (
+              <motion.div
+                initial={{ opacity: 0, y: 60 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 2 }}
+                className="relative max-w-2xl text-center px-8"
+              >
+                <motion.h2
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 2 }}
+                  className="text-3xl sm:text-4xl text-white mb-12"
+                >
+                  لَكِ أَنْتِ
+                </motion.h2>
+
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 3, delay: 1 }}
+                  className="text-white/90 text-xl sm:text-2xl leading-loose whitespace-pre-line font-light"
+                  dir="rtl"
+                >
+                  {secretMessage}
+                </motion.p>
+              </motion.div>
+            )}
+
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
 }
-
-else if(opened && !showMessage){
-app.innerHTML=`
-<div class="text-center">
-<h2 class="text-white text-4xl mb-10">A Message Waiting For You</h2>
-
-<button onclick="reveal()" 
-class="px-10 py-4 rounded-xl bg-gradient-to-r from-fuchsia-600 to-rose-500 text-white text-lg">
-Reveal Message
-</button>
-</div>
-`;
-}
-
-else{
-app.innerHTML=`
-<div class="max-w-xl text-center text-white">
-<h2 class="text-3xl mb-10">لَكِ أَنْتِ</h2>
-<p style="white-space:pre-line; direction:rtl; font-size:22px; line-height:2">
-${message}
-</p>
-</div>
-`;
-}
-
-}
-
-function openGift(){
-opened=true;
-render();
-}
-
-function reveal(){
-showMessage=true;
-render();
-}
-
-render();
-
-</script>
-
-</body>
-</html>
